@@ -6,9 +6,10 @@ import Container from '../component/Container'
 import Card from '../component/Card';
 
 import { AuthContext } from '../component/Store/Context'
+import Data from '../club.json'
 
 const Dashboard:React.FC = ()=>  {
-  const { loggedIn, signInAttemp } = React.useContext(AuthContext);
+  const { search, loggedIn, signInAttemp } = React.useContext(AuthContext);
   return (
     <Fragment>
       <Navbar/>
@@ -18,10 +19,15 @@ const Dashboard:React.FC = ()=>  {
         <Fragment></Fragment>
       )}
       <Container> 
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {
+          Data
+          .filter(data => data.name.toLowerCase().includes(search.toLowerCase()) || data.description.toLowerCase().includes(search.toLowerCase())) 
+          .map( data => {
+            return(
+              <Card title={data.name} id={data.id} key={data.id} description={data.description} maxApplicant={data.maxApplicant} />
+            );
+          })
+        }
       </Container>
     </Fragment>
   );

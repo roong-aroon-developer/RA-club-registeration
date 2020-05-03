@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    width: 345,
     margin: 20,
     borderRadius: 10
   },
@@ -26,7 +26,14 @@ const useStyles = makeStyles({
   }
 });
 
-const MediaCard:React.FC = () => {
+type cardProps = {
+  title: string,
+  id: string,
+  description: string,
+  maxApplicant: number
+}
+
+const MediaCard:React.FC<cardProps> = (props) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -38,11 +45,10 @@ const MediaCard:React.FC = () => {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Computer Club
+            {props.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            {props.description}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -51,7 +57,7 @@ const MediaCard:React.FC = () => {
           Join
         </Button>
         <Typography className={classes.totalBox}>
-            5/35
+            5/{props.maxApplicant}
         </Typography>
       </CardActions>
     </Card>

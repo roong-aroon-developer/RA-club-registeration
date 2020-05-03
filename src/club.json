@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Computer Club",
+    "id": "computer",
+    "img": "path",
+    "description": "ชมรมคอมพิวเตอร์ เกี่ยวกับสอนเขียน code เเละเขียน codeเขียน codeเขียน codeเขียน code",
+    "maxApplicant": 35
+  },
+  {
+    "name": "Basketball Club",
+    "id": "basketball",
+    "img": "path",
+    "description": "ชมรมบาสบาส ชู้ตบาสเล่นบาสเก่งกากก็มาเหอะครับน้องๆ ",
+    "maxApplicant": 20
+  }
+]

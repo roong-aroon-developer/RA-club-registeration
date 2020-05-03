@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const Navbar: React.FC = () => {
   const classes = useStyles();
 
-  const { loggedIn, checkAuth, checkSignInAttemp } = React.useContext(AuthContext)
+  const { loggedIn, userInfo, checkAuth, checkSignInAttemp } = React.useContext(AuthContext)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -86,7 +86,7 @@ const Navbar: React.FC = () => {
                   onClick={handleMenu}
                   color="inherit"
                 >
-                  <Avatar>wit</Avatar>
+                  <Avatar alt='profile' src={userInfo.img}></Avatar>
                 </IconButton>
                 <Menu
                   id="menu-appbar"
