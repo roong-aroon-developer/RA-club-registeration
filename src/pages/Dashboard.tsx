@@ -1,19 +1,22 @@
 import React, { Fragment } from 'react';
 
 import Navbar from '../component/Navbar';
+import Login from '../component/Login';
 import Container from '../component/Container'
 import Card from '../component/Card';
-import Login from '../component/Login'
 
-import { AuthContext } from '../component/Store/Context';
+import { AuthContext } from '../component/Store/Context'
 
 const Dashboard:React.FC = ()=>  {
-  const { loggedIn } = React.useContext(AuthContext);
+  const { loggedIn, signInAttemp } = React.useContext(AuthContext);
   return (
     <Fragment>
       <Navbar/>
-      {console.log(loggedIn)} 
-      <Login />
+      {!loggedIn && signInAttemp ? (
+        <Login />
+      ) : (
+        <Fragment></Fragment>
+      )}
       <Container> 
         <Card />
         <Card />

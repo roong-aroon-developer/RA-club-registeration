@@ -9,6 +9,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Searchbox from './Searchbox'
 
+import firebase from "firebase/app";
+import "firebase/auth";
+
 import { AuthContext } from './Store/Context';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     signin: {
       color: "#fff",
       borderColor: "#fff",
-      borderRadius: "15px",
+      borderRadius: 15,
     },
     img: {
       width: "32px",
@@ -53,7 +56,8 @@ const Navbar: React.FC = () => {
   };
 
   const handleSignout = () => {
-    checkAuth(false)
+    firebase.auth().signOut();
+    checkAuth(false);
     handleClose();
   };
 
