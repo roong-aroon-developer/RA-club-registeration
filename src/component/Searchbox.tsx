@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 
-import { AuthContext } from './Store/Context';
+import { AuthContext } from "./Store/Context";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,7 +58,9 @@ const Searchbox: React.FC = () => {
   const classes = useStyles();
   const { checkSearch } = React.useContext(AuthContext);
 
-  const searchHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const searchHandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     let keyword = e.target.value;
     checkSearch(keyword);
   };
@@ -74,7 +76,7 @@ const Searchbox: React.FC = () => {
           root: classes.inputRoot,
           input: classes.inputInput,
         }}
-        onChange={(e)=>searchHandler(e)}
+        onChange={(e) => searchHandler(e)}
         inputProps={{ "aria-label": "search" }}
       />
     </div>

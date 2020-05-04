@@ -1,19 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import firebase from "firebase/app";
 import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 import { AuthContext } from "./Store/Context";
-import { firebaseConfig } from "../config";
-
-firebase.initializeApp(firebaseConfig);
+import firebase from './Firebase'
 
 const useStyles = makeStyles({
   root: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     position: "fixed",
     top: 0,
     left: 0,
@@ -21,16 +18,16 @@ const useStyles = makeStyles({
     right: 0,
     zIndex: 2,
     textAlign: "center",
-    transition: 'fade'
+    transition: "fade",
   },
   card: {
     position: "fixed",
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 10,
     width: 300,
     borderRadius: 10,
     zIndex: 99,
-    boxShadow: '15px 15px 102px -30px rgba(0,0,0,0.67)'
+    boxShadow: "15px 15px 102px -30px rgba(0,0,0,0.67)",
   },
   blur: {
     position: "fixed",
@@ -41,8 +38,8 @@ const useStyles = makeStyles({
     right: 0,
     zIndex: 2,
     textAlign: "center",
-    backdropFilter: 'blur(10px)',
-  }
+    backdropFilter: "blur(10px)",
+  },
 });
 
 const uiConfig = {
@@ -62,20 +59,21 @@ const uiConfig = {
 
 const Login: React.FC = () => {
   const classes = useStyles();
-  const { checkSignInAttemp, checkAuth, checkUserInfo } = React.useContext(AuthContext);
-  
+  const { checkSignInAttemp, checkAuth, checkUserInfo } = React.useContext(
+    AuthContext
+  );
+
   const popupHandler = (e: React.MouseEvent) => {
     e.preventDefault();
     checkSignInAttemp(false); //close popup
-  }
+  };
 
   React.useEffect(() => {
     const unregisterAuthObserver = firebase
       .auth()
       .onAuthStateChanged((user) => {
         checkAuth(!!user);
-      }
-      );
+      });
     return () => {
       unregisterAuthObserver();
       checkSignInAttemp(false);
@@ -86,17 +84,17 @@ const Login: React.FC = () => {
         img: firebase.auth().currentUser?.photoURL,
       });
     };
-  }, );
+  });
   return (
-    <div className={classes.root} >
+    <div className={classes.root}>
       <div className={classes.blur} onClick={popupHandler}></div>
-      <div className={classes.card} >
-          <p>Sign-in</p>
-          <StyledFirebaseAuth
-            uiConfig={uiConfig}
-            firebaseAuth={firebase.auth()}
-          />
-        </div>
+      <div className={classes.card}>
+        <p>Sign-in</p>
+        <StyledFirebaseAuth
+          uiConfig={uiConfig}
+          firebaseAuth={firebase.auth()}
+        />
+      </div>
     </div>
   );
 };

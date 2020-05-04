@@ -12,5 +12,26 @@
     "img": "path",
     "description": "ชมรมบาสบาส ชู้ตบาสเล่นบาสเก่งกากก็มาเหอะครับน้องๆ ",
     "maxApplicant": 20
+  },
+  {
+    "name": "Football Club",
+    "id": "football",
+    "img": "path",
+    "description": "บอลบอลบอลเตะฟุตบอลเหมือนเท่ไอเวเตะบอลที่ฟุดซอลซอลซอล",
+    "maxApplicant": 30
+  },
+  {
+    "name": "Basketball Club",
+    "id": "b",
+    "img": "path",
+    "description": "ชมรมบาสบาส ชู้ตบาสเล่นบาสเก่งกากก็มาเหอะครับน้องๆ ",
+    "maxApplicant": 20
+  },
+  {
+    "name": "Basketball Club",
+    "id": "ba",
+    "img": "path",
+    "description": "ชมรมบาสบาส ชู้ตบาสเล่นบาสเก่งกากก็มาเหอะครับน้องๆ ",
+    "maxApplicant": 20
   }
 ]

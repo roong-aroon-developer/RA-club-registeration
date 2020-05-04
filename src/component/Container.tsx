@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    alignContent: 'space-around'
+    alignContent: "space-around",
   },
 });
 
