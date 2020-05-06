@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -8,9 +8,12 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import LockIcon from "@material-ui/icons/Lock";
+import Popup from "./Popup";
 
-import firebase from './Firebase';
-import 'firebase/firestore'
+import firebase from "./Firebase";
+import "firebase/firestore";
+
+import { AuthContext } from "./Store/Context";
 
 const useStyles = makeStyles({
   root: {
@@ -37,56 +40,107 @@ type cardProps = {
   maxApplicant: number;
 };
 
+type joinTypes = {
+  available: boolean;
+};
 
 const MediaCard: React.FC<cardProps> = (props) => {
   let db = firebase.firestore();
   const classes = useStyles();
 
-  const [join, setJoin] = React.useState<any>(false)
+  const { userInfo, loggedIn } = React.useContext(AuthContext);
+  const [join, setJoin] = React.useState<any>({ available: false });
+  const [popup, setPopup] = React.useState<boolean>(false);
+  const openPopup = () => {
+    setPopup(true);
+  };
 
-  React.useEffect(()=> {
-    const unsub = db.collection('activate').doc('join').onSnapshot(doc => {
-      setJoin(doc.data())
-      console.log(doc.data())
-    });
+  const closePopup = () => {
+    setPopup(false);
+  };
 
-    return () => unsub()
-  }, [])
+  const onConfirmed = () => {
+    verifiledJoinHandler();
+    setPopup(false);
+  };
+
+  const verifiledJoinHandler = () => {
+    db.collection("club")
+      .doc(props.id)
+      .collection(JSON.stringify(userInfo.email))
+      .doc("info")
+      .set({
+        nickname: "wit",
+        name: userInfo.name,
+        phone: userInfo.phone,
+        class: "3/4",
+      });
+  };
+
+  React.useEffect(() => {
+    const unsub = db
+      .collection("activate")
+      .doc("join")
+      .onSnapshot((doc) => {
+        setJoin(doc.data());
+      });
+    return () => {
+      unsub();
+    };
+  }, [db]);
 
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {props.title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {props.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        {join.available ? (
-          <Button size="small" color="primary">
-            Join
-          </Button>
-        ) : (
-          <Button size="small" variant="outlined" disabled>
-            <LockIcon fontSize="small" />
-            Join
-          </Button>
-        )}
+    <Fragment>
+      <Card className={classes.root}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image="/static/images/cards/contemplative-reptile.jpg"
+            title="Contemplative Reptile"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {props.title}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {props.description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          {join.available && loggedIn ? (
+            <Button size="small" color="primary" onClick={openPopup}>
+              Join
+            </Button>
+          ) : (
+            <Button size="small" variant="outlined" disabled>
+              <LockIcon fontSize="small" />
+              Join
+            </Button>
+          )}
 
-        <Typography className={classes.totalBox}>
-          5/{props.maxApplicant}
+          <Typography className={classes.totalBox}>
+            5/{props.maxApplicant}
+          </Typography>
+        </CardActions>
+      </Card>
+      <Popup open={popup} onClose={closePopup} title="confirmation">
+        <Typography>
+          โปรดกดปุ่ม"ยืนยัน" เพื่อยืนยันการเข้าชมรม {props.title}
         </Typography>
-      </CardActions>
-    </Card>
+        <div>
+          <Button
+            style={{ margin: 16 }}
+            variant="contained"
+            color="primary"
+            size="medium"
+            onClick={onConfirmed}
+          >
+            ยืนยัน
+          </Button>
+        </div>
+      </Popup>
+    </Fragment>
   );
 };
 

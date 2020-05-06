@@ -21,17 +21,24 @@
     "maxApplicant": 30
   },
   {
-    "name": "Basketball Club",
-    "id": "b",
+    "name": "Volleyball Club",
+    "id": "volleyball",
+    "img": "path",
+    "description": "ชมรมวอลเลบอลบอลบอลบอลบอลบอลบอลบอลบอลบอลบอลบลอบล",
+    "maxApplicant": 20
+  },
+  {
+    "name": "Boardgame Club",
+    "id": "boardgame",
     "img": "path",
     "description": "ชมรมบาสบาส ชู้ตบาสเล่นบาสเก่งกากก็มาเหอะครับน้องๆ ",
     "maxApplicant": 20
   },
   {
-    "name": "Basketball Club",
-    "id": "ba",
+    "name": "Reading Club",
+    "id": "book",
     "img": "path",
-    "description": "ชมรมบาสบาส ชู้ตบาสเล่นบาสเก่งกากก็มาเหอะครับน้องๆ ",
-    "maxApplicant": 20
+    "description": "ชมรมอ่านหนังสือ อ่านไม่อ่านอ่านไม่อ่านอ่านไม่อ่านอ่านไม่อ่าน",
+    "maxApplicant": 35
   }
 ]

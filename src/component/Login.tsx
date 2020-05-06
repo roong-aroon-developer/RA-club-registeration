@@ -1,46 +1,11 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 import { AuthContext } from "./Store/Context";
-import firebase from './Firebase'
+import firebase from "./Firebase";
 
-const useStyles = makeStyles({
-  root: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "fixed",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    zIndex: 2,
-    textAlign: "center",
-    transition: "fade",
-  },
-  card: {
-    position: "fixed",
-    backgroundColor: "#fff",
-    padding: 10,
-    width: 300,
-    borderRadius: 10,
-    zIndex: 99,
-    boxShadow: "15px 15px 102px -30px rgba(0,0,0,0.67)",
-  },
-  blur: {
-    position: "fixed",
-    margin: "auto",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    zIndex: 2,
-    textAlign: "center",
-    backdropFilter: "blur(10px)",
-  },
-});
+import Popup from './Popup';
 
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
@@ -58,10 +23,7 @@ const uiConfig = {
 };
 
 const Login: React.FC = () => {
-  const classes = useStyles();
-  const { checkSignInAttemp, checkAuth, checkUserInfo } = React.useContext(
-    AuthContext
-  );
+  const { checkSignInAttemp, checkAuth, checkUserInfo } = React.useContext(AuthContext);
 
   const popupHandler = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -84,18 +46,14 @@ const Login: React.FC = () => {
         img: firebase.auth().currentUser?.photoURL,
       });
     };
-  });
+  }, [checkAuth, checkSignInAttemp, checkUserInfo]);
   return (
-    <div className={classes.root}>
-      <div className={classes.blur} onClick={popupHandler}></div>
-      <div className={classes.card}>
-        <p>Sign-in</p>
+    <Popup title='Sign-in' open={true} onClose={popupHandler}>
         <StyledFirebaseAuth
           uiConfig={uiConfig}
           firebaseAuth={firebase.auth()}
         />
-      </div>
-    </div>
+    </Popup>
   );
 };
 
