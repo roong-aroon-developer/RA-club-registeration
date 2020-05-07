@@ -3,9 +3,9 @@ import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 import { AuthContext } from "./Store/Context";
-import firebase from "./Firebase";
+import firebase from "../component/Firebase";
 
-import Popup from './Popup';
+import Popup from '../component/Popup';
 
 const uiConfig = {
   // Popup signin flow rather than redirect flow.

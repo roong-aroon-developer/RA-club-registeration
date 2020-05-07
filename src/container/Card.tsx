@@ -8,9 +8,10 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import LockIcon from "@material-ui/icons/Lock";
-import Popup from "./Popup";
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import Popup from "../component/Popup";
 
-import firebase from "./Firebase";
+import firebase from "../component/Firebase";
 import "firebase/firestore";
 
 import { AuthContext } from "./Store/Context";
@@ -40,17 +41,17 @@ type cardProps = {
   maxApplicant: number;
 };
 
-type joinTypes = {
-  available: boolean;
-};
-
 const MediaCard: React.FC<cardProps> = (props) => {
   let db = firebase.firestore();
   const classes = useStyles();
 
+  let joinButton;
+
   const { userInfo, loggedIn } = React.useContext(AuthContext);
   const [join, setJoin] = React.useState<any>({ available: false });
   const [popup, setPopup] = React.useState<boolean>(false);
+  const [ currentClub, setCurrentClub ] = React.useState<any>({ club: ""})
+  const [ isLoading, setIsLoading ] = React.useState<boolean>(true)
   const openPopup = () => {
     setPopup(true);
   };
@@ -83,11 +84,34 @@ const MediaCard: React.FC<cardProps> = (props) => {
       .doc("join")
       .onSnapshot((doc) => {
         setJoin(doc.data());
-      });
-    return () => {
-      unsub();
-    };
+    });
+    return () => unsub()
   }, [db]);
+
+  if(join.available && loggedIn) {
+    if(props.id === currentClub.club) {
+      joinButton = (
+        <Button size="small" variant="outlined" disabled>
+            <CheckCircleIcon fontSize="small" />
+            Joined
+        </Button>
+      )
+    } 
+    joinButton = (
+      <Button size="small" color="primary" onClick={openPopup}>
+              Join
+      </Button>
+    )
+  }
+  if(!join.available || !loggedIn) {
+    joinButton = (
+      <Button size="small" variant="outlined" disabled>
+          <LockIcon fontSize="small" />
+          Join
+      </Button>
+    )
+  }
+  
 
   return (
     <Fragment>
@@ -108,17 +132,7 @@ const MediaCard: React.FC<cardProps> = (props) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          {join.available && loggedIn ? (
-            <Button size="small" color="primary" onClick={openPopup}>
-              Join
-            </Button>
-          ) : (
-            <Button size="small" variant="outlined" disabled>
-              <LockIcon fontSize="small" />
-              Join
-            </Button>
-          )}
-
+            {joinButton}
           <Typography className={classes.totalBox}>
             5/{props.maxApplicant}
           </Typography>

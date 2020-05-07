@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 
-import Navbar from "../component/Navbar";
-import Login from "../component/Login";
+import Navbar from "../container/Navbar";
+import Login from "../container/Login";
 import Container from "../component/Container";
-import Card from "../component/Card";
+import Card from "../container/Card";
 
-import { AuthContext } from "../component/Store/Context";
+import { AuthContext } from "../container/Store/Context";
 import Data from "../club.json";
 
 const Dashboard: React.FC = () => {
