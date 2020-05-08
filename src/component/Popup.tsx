@@ -11,6 +11,11 @@ const useStyles = makeStyles({
     textAlign: "center",
     padding: 10
   },
+  margin: {
+    marginLeft: 15,
+    marginRight: 15
+  }
+
 });
 
 const Transition = React.forwardRef(function Transition(
@@ -39,7 +44,9 @@ const Popup: React.FC<propTypes> = (props) => {
       open={props.open}
     >
       <DialogTitle>{props.title}</DialogTitle>
-      {props.children}
+      <div className={classes.margin}>
+        {props.children}
+      </div>
     </Dialog>
   );
 };
