@@ -8,8 +8,33 @@ import Card from "../container/Card";
 import { AuthContext } from "../container/Store/Context";
 import Data from "../club.json";
 
+import firebase from "../component/Firebase";
+import "firebase/firestore";
+
+
 const Dashboard: React.FC = () => {
-  const { search, loggedIn, signInAttemp } = React.useContext(AuthContext);
+  let db = firebase.firestore();
+  const { search, loggedIn, signInAttemp, userInfo } = React.useContext(AuthContext);
+  const [join, setJoin] = React.useState<any>({ available: false });
+  const [ currentClub, setCurrentClub ] = React.useState<any>({ club: "" });
+
+  React.useEffect(() => {
+    db.collection('user')
+      .doc(JSON.stringify(userInfo.email)).get()
+      .then( doc => {
+        if(doc.exists) {
+          setCurrentClub(doc.data());
+        }
+      })
+    const unsub = db
+      .collection("activate")
+      .doc("join")
+      .onSnapshot((doc) => {
+        setJoin(doc.data());
+    });
+    return () => unsub()
+  }, [db, userInfo.email]);
+
   return (
     <Fragment>
       <Navbar />
@@ -27,6 +52,8 @@ const Dashboard: React.FC = () => {
               key={data.id}
               description={data.description}
               maxApplicant={data.maxApplicant}
+              join={join}
+              currentClub={currentClub.club}
             />
           );
         })}

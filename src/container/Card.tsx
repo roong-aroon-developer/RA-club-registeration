@@ -39,6 +39,8 @@ type cardProps = {
   id: string;
   description: string;
   maxApplicant: number;
+  join: any;
+  currentClub: any
 };
 
 const MediaCard: React.FC<cardProps> = (props) => {
@@ -48,10 +50,7 @@ const MediaCard: React.FC<cardProps> = (props) => {
   let joinButton;
 
   const { userInfo, loggedIn } = React.useContext(AuthContext);
-  const [join, setJoin] = React.useState<any>({ available: false });
   const [popup, setPopup] = React.useState<boolean>(false);
-  const [ currentClub, setCurrentClub ] = React.useState<any>({ club: ""})
-  const [ isLoading, setIsLoading ] = React.useState<boolean>(true)
   const openPopup = () => {
     setPopup(true);
   };
@@ -75,41 +74,42 @@ const MediaCard: React.FC<cardProps> = (props) => {
         name: userInfo.name,
         phone: userInfo.phone,
         class: "3/4",
-      });
+    });
+    db.collection('user')
+      .doc(JSON.stringify(userInfo.email))
+      .set({
+        club: props.id
+      })
   };
 
-  React.useEffect(() => {
-    const unsub = db
-      .collection("activate")
-      .doc("join")
-      .onSnapshot((doc) => {
-        setJoin(doc.data());
-    });
-    return () => unsub()
-  }, [db]);
-
-  if(join.available && loggedIn) {
-    if(props.id === currentClub.club) {
-      joinButton = (
-        <Button size="small" variant="outlined" disabled>
-            <CheckCircleIcon fontSize="small" />
-            Joined
-        </Button>
-      )
-    } 
-    joinButton = (
-      <Button size="small" color="primary" onClick={openPopup}>
-              Join
-      </Button>
-    )
-  }
-  if(!join.available || !loggedIn) {
+  if(!props.join.available || !loggedIn) {
     joinButton = (
       <Button size="small" variant="outlined" disabled>
           <LockIcon fontSize="small" />
           Join
       </Button>
     )
+
+    
+    
+  }
+  else {
+    if(props.id === props.currentClub) {
+      console.log('matched')
+      joinButton = (
+        <Button size="small" variant="outlined" disabled>
+            <CheckCircleIcon fontSize="small" />
+            Joined
+        </Button>
+      )
+    }
+    else {
+      joinButton = (
+        <Button size="small" color="primary" onClick={openPopup}>
+                Join
+        </Button>
+      )
+    } 
   }
   
 
