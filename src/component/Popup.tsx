@@ -9,7 +9,7 @@ import { TransitionProps } from '@material-ui/core/transitions';
 const useStyles = makeStyles({
   root: {
     textAlign: "center",
-    padding: 10
+    padding: 10,
   },
   margin: {
     marginLeft: 15,
@@ -42,6 +42,7 @@ const Popup: React.FC<propTypes> = (props) => {
       keepMounted
       aria-labelledby="simple-dialog-title"
       open={props.open}
+      maxWidth="md"
     >
       <DialogTitle>{props.title}</DialogTitle>
       <div className={classes.margin}>

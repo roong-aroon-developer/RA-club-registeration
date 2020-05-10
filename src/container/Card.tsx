@@ -95,7 +95,6 @@ const MediaCard: React.FC<cardProps> = (props) => {
   }
   else {
     if(props.id === props.currentClub) {
-      console.log('matched')
       joinButton = (
         <Button size="small" variant="outlined" disabled>
             <CheckCircleIcon fontSize="small" />
@@ -138,7 +137,25 @@ const MediaCard: React.FC<cardProps> = (props) => {
           </Typography>
         </CardActions>
       </Card>
-      <Popup open={popup} onClose={closePopup} title="confirmation">
+      { props.currentClub !== "" ? (
+        <Popup open={popup} onClose={closePopup} title="confirmation" >
+        <Typography>
+          โปรดกดปุ่ม"เปลี่ยน" เพื่อเปลี่ยนไปชมรม {props.title}
+        </Typography>
+        <div>
+          <Button
+            style={{ margin: 16 }}
+            variant="contained"
+            color="primary"
+            size="medium"
+            onClick={onConfirmed}
+          >
+            เปลี่ยน
+          </Button>
+        </div>
+      </Popup>
+      ) : (
+        <Popup open={popup} onClose={closePopup} title="Confirmation">
         <Typography>
           โปรดกดปุ่ม"ยืนยัน" เพื่อยืนยันการเข้าชมรม {props.title}
         </Typography>
@@ -154,6 +171,9 @@ const MediaCard: React.FC<cardProps> = (props) => {
           </Button>
         </div>
       </Popup>
+      )
+      }
+      
     </Fragment>
   );
 };
