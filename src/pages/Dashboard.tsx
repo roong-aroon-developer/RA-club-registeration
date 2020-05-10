@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
         setJoin(doc.data());
     });
     return () => unsub()
-  }, [db, userInfo.email]);
+  }, [db, userInfo.email, currentClub]);
 
   return (
     <Fragment>
