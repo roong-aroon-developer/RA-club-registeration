@@ -19,21 +19,26 @@ const Dashboard: React.FC = () => {
   const [ currentClub, setCurrentClub ] = React.useState<any>({ club: "" });
 
   React.useEffect(() => {
-    db.collection('user')
+    async function fetchData() {
+      await db.collection('user')
       .doc(JSON.stringify(userInfo.email)).get()
       .then( doc => {
         if(doc.exists) {
           setCurrentClub(doc.data());
         }
-      })
-    const unsub = db
+      });
+      const unsub = await db
       .collection("activate")
       .doc("join")
       .onSnapshot((doc) => {
         setJoin(doc.data());
     });
     return () => unsub()
-  }, [db, userInfo.email, currentClub]);
+  }
+      
+    fetchData();
+    
+  }, [userInfo.email, currentClub, db]);
 
   return (
     <Fragment>
@@ -52,7 +57,7 @@ const Dashboard: React.FC = () => {
               key={data.id}
               description={data.description}
               maxApplicant={data.maxApplicant}
-              join={join}
+              join={join.available}
               currentClub={currentClub.club}
             />
           );

@@ -74,6 +74,7 @@ const Navbar: React.FC = () => {
             <img
               className={classes.img}
               alt="logo"
+              width={32}
               src={require("../assets/logo.png")}
             ></img>
           </div>

@@ -82,16 +82,13 @@ const MediaCard: React.FC<cardProps> = (props) => {
       })
   };
 
-  if(!props.join.available || !loggedIn) {
+  if(!props.join || !loggedIn) {
     joinButton = (
       <Button size="small" variant="outlined" disabled>
           <LockIcon fontSize="small" />
           Join
       </Button>
     )
-
-    
-    
   }
   else {
     if(props.id === props.currentClub) {
