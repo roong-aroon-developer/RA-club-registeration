@@ -6,4 +6,4 @@ export const firebaseConfig = {
     storageBucket: "raclubs-registeration-system.appspot.com",
     messagingSenderId: "444113155881",
     appId: "1:444113155881:web:47871fe4005ce2ad312938"
-  };
+};

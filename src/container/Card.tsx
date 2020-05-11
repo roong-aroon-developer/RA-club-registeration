@@ -64,22 +64,26 @@ const MediaCard: React.FC<cardProps> = (props) => {
     setPopup(false);
   };
 
+  const onClubChange = () => {
+    verifiledJoinHandler();
+    db.collection("user")
+      .doc(JSON.stringify(userInfo.email))
+      .set({
+        club: props.id
+    });
+    setPopup(false);
+  }
+
   const verifiledJoinHandler = () => {
-    db.collection("club")
-      .doc(props.id)
-      .collection(JSON.stringify(userInfo.email))
-      .doc("info")
+    db.collection("user")
+      .doc(JSON.stringify(userInfo.email))
       .set({
         nickname: "wit",
         name: userInfo.name,
         phone: userInfo.phone,
         class: "3/4",
-    });
-    db.collection('user')
-      .doc(JSON.stringify(userInfo.email))
-      .set({
         club: props.id
-      })
+    });
   };
 
   if(!props.join || !loggedIn) {
@@ -108,7 +112,6 @@ const MediaCard: React.FC<cardProps> = (props) => {
     } 
   }
   
-
   return (
     <Fragment>
       <Card className={classes.root}>
@@ -145,7 +148,7 @@ const MediaCard: React.FC<cardProps> = (props) => {
             variant="contained"
             color="primary"
             size="medium"
-            onClick={onConfirmed}
+            onClick={onClubChange}
           >
             เปลี่ยน
           </Button>
