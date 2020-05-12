@@ -68,7 +68,7 @@ const MediaCard: React.FC<cardProps> = (props) => {
     verifiledJoinHandler();
     db.collection("user")
       .doc(JSON.stringify(userInfo.uid))
-      .set({
+      .update({
         club: props.id
     }).then(()=> {
       checkClubChange(!onClubChange);
