@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 type info = {
   name: string | null | undefined;
+  uid: string | null | undefined;
   email: string | null | undefined;
   phone: string | null | undefined;
   img: any;
@@ -26,6 +27,7 @@ export const Store: React.FC = (props) => {
   const [search, setSearch] = useState<string>("");
   const [userInfo, setUserInfo] = useState<info>({
     name: "",
+    uid: "",
     email: "",
     phone: "",
     img: "",
@@ -42,6 +44,7 @@ export const Store: React.FC = (props) => {
   const checkUserInfo = (e: info) => {
     setUserInfo({
       name: e.name,
+      uid: e.uid,
       email: e.email,
       phone: e.phone,
       img: e.img,

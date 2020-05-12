@@ -67,7 +67,7 @@ const MediaCard: React.FC<cardProps> = (props) => {
   const onClubChange = () => {
     verifiledJoinHandler();
     db.collection("user")
-      .doc(JSON.stringify(userInfo.email))
+      .doc(JSON.stringify(userInfo.uid))
       .set({
         club: props.id
     });
@@ -76,7 +76,7 @@ const MediaCard: React.FC<cardProps> = (props) => {
 
   const verifiledJoinHandler = () => {
     db.collection("user")
-      .doc(JSON.stringify(userInfo.email))
+      .doc(JSON.stringify(userInfo.uid))
       .set({
         nickname: "wit",
         name: userInfo.name,

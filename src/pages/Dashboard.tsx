@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
   React.useEffect(() => {
     async function fetchData() {
       await db.collection('user')
-      .doc(JSON.stringify(userInfo.email)).get()
+      .doc(JSON.stringify(userInfo.uid)).get()
       .then( doc => {
         if(doc.exists) {
           setCurrentClub(doc.data());
@@ -38,7 +38,7 @@ const Dashboard: React.FC = () => {
       
     fetchData();
     
-  }, [userInfo.email, currentClub, db]);
+  }, [userInfo.uid, currentClub, db]);
 
   return (
     <Fragment>

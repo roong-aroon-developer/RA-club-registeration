@@ -41,6 +41,7 @@ const Login: React.FC = () => {
       checkSignInAttemp(false);
       checkUserInfo({
         name: firebase.auth().currentUser?.displayName,
+        uid: firebase.auth().currentUser?.uid,
         email: firebase.auth().currentUser?.email,
         phone: firebase.auth().currentUser?.phoneNumber,
         img: firebase.auth().currentUser?.photoURL,
