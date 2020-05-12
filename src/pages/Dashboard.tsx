@@ -14,7 +14,7 @@ import "firebase/firestore";
 
 const Dashboard: React.FC = () => {
   let db = firebase.firestore();
-  const { search, loggedIn, signInAttemp, userInfo } = React.useContext(AuthContext);
+  const { search, loggedIn, signInAttemp, userInfo, onClubChange } = React.useContext(AuthContext);
   const [join, setJoin] = React.useState<any>({ available: false });
   const [ currentClub, setCurrentClub ] = React.useState<any>({ club: "" });
 
@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
       });  
   }
     fetchData();
-  }, [userInfo.uid, db]);
+  }, [userInfo.uid, db, onClubChange]);
 
   React.useEffect(()=> {
     const unsub = db

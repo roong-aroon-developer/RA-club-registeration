@@ -13,10 +13,12 @@ export type initialType = {
   signInAttemp: boolean;
   search: string;
   userInfo: info;
+  onClubChange: boolean
   checkAuth: (event: boolean) => void;
   checkSignInAttemp: (event: boolean) => void;
   checkSearch: (event: string) => void;
   checkUserInfo: (event: info) => void;
+  checkClubChange: (event: boolean) => void;
 };
 
 export const AuthContext = React.createContext({} as initialType);
@@ -32,6 +34,7 @@ export const Store: React.FC = (props) => {
     phone: "",
     img: "",
   });
+  const [ onClubChange, setClubChange ] = useState<boolean>(false);
 
   const checkAuth = (e: boolean) => {
     setLoggedIn(e);
@@ -55,6 +58,10 @@ export const Store: React.FC = (props) => {
     setSearch(e);
   };
 
+  const checkClubChange = (e: boolean) => {
+    setClubChange(e);
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -62,10 +69,12 @@ export const Store: React.FC = (props) => {
         signInAttemp,
         userInfo,
         search,
+        onClubChange,
         checkAuth,
         checkSignInAttemp,
         checkUserInfo,
         checkSearch,
+        checkClubChange
       }}
     >
       {props.children}

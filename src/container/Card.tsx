@@ -49,7 +49,7 @@ const MediaCard: React.FC<cardProps> = (props) => {
 
   let joinButton;
 
-  const { userInfo, loggedIn } = React.useContext(AuthContext);
+  const { userInfo, loggedIn, checkClubChange, onClubChange } = React.useContext(AuthContext);
   const [popup, setPopup] = React.useState<boolean>(false);
   const openPopup = () => {
     setPopup(true);
@@ -64,13 +64,15 @@ const MediaCard: React.FC<cardProps> = (props) => {
     setPopup(false);
   };
 
-  const onClubChange = () => {
+  const onCClubChange = () => {
     verifiledJoinHandler();
     db.collection("user")
       .doc(JSON.stringify(userInfo.uid))
       .set({
         club: props.id
-    });
+    }).then(()=> {
+      checkClubChange(!onClubChange);
+    })
     setPopup(false);
   }
 
@@ -148,7 +150,7 @@ const MediaCard: React.FC<cardProps> = (props) => {
             variant="contained"
             color="primary"
             size="medium"
-            onClick={onClubChange}
+            onClick={onCClubChange}
           >
             เปลี่ยน
           </Button>
