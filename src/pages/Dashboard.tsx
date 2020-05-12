@@ -25,20 +25,22 @@ const Dashboard: React.FC = () => {
       .then( doc => {
         if(doc.exists) {
           setCurrentClub(doc.data());
+          console.log('f')
         }
-      });
-      const unsub = await db
+      });  
+  }
+    fetchData();
+  }, [userInfo.uid, db]);
+
+  React.useEffect(()=> {
+    const unsub = db
       .collection("activate")
       .doc("join")
       .onSnapshot((doc) => {
         setJoin(doc.data());
     });
     return () => unsub()
-  }
-      
-    fetchData();
-    
-  }, [userInfo.uid, currentClub, db]);
+  }, [db])
 
   return (
     <Fragment>

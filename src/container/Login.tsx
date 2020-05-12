@@ -23,7 +23,7 @@ const uiConfig = {
 };
 
 const Login: React.FC = () => {
-  const { checkSignInAttemp, checkAuth, checkUserInfo } = React.useContext(AuthContext);
+  const { checkSignInAttemp, checkAuth, checkUserInfo } = React.useContext(AuthContext); 
 
   const popupHandler = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -34,18 +34,18 @@ const Login: React.FC = () => {
     const unregisterAuthObserver = firebase
       .auth()
       .onAuthStateChanged((user) => {
+        checkUserInfo({
+          name: firebase.auth().currentUser?.displayName,
+          uid: firebase.auth().currentUser?.uid,
+          email: firebase.auth().currentUser?.email,
+          phone: firebase.auth().currentUser?.phoneNumber,
+          img: firebase.auth().currentUser?.photoURL,
+        });
         checkAuth(!!user);
       });
     return () => {
       unregisterAuthObserver();
       checkSignInAttemp(false);
-      checkUserInfo({
-        name: firebase.auth().currentUser?.displayName,
-        uid: firebase.auth().currentUser?.uid,
-        email: firebase.auth().currentUser?.email,
-        phone: firebase.auth().currentUser?.phoneNumber,
-        img: firebase.auth().currentUser?.photoURL,
-      });
     };
   }, [checkAuth, checkSignInAttemp, checkUserInfo]);
   return (
