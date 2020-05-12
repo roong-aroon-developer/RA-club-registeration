@@ -34,17 +34,17 @@ const Login: React.FC = () => {
     const unregisterAuthObserver = firebase
       .auth()
       .onAuthStateChanged((user) => {
-        checkUserInfo({
-          name: firebase.auth().currentUser?.displayName,
-          uid: firebase.auth().currentUser?.uid,
-          email: firebase.auth().currentUser?.email,
-          phone: firebase.auth().currentUser?.phoneNumber,
-          img: firebase.auth().currentUser?.photoURL,
-        });
         checkAuth(!!user);
       });
     return () => {
       unregisterAuthObserver();
+      checkUserInfo({
+        name: firebase.auth().currentUser?.displayName,
+        uid: firebase.auth().currentUser?.uid,
+        email: firebase.auth().currentUser?.email,
+        phone: firebase.auth().currentUser?.phoneNumber,
+        img: firebase.auth().currentUser?.photoURL,
+      });
       checkSignInAttemp(false);
     };
   }, [checkAuth, checkSignInAttemp, checkUserInfo]);
