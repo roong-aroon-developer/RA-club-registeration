@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from 'react-router-dom'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -105,7 +106,7 @@ const Navbar: React.FC = () => {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem><NavLink to="/profile" style={{textDecoration: "none"}}>Profile</NavLink></MenuItem>
                 <MenuItem onClick={handleSignout}>Logout</MenuItem>
               </Menu>
             </div>
